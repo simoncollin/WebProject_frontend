@@ -20,6 +20,7 @@ class ParticipationForm extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            id:'',
             firstName: '',
             lastName: '',
             bday: new Date(),
@@ -59,10 +60,10 @@ class ParticipationForm extends React.Component {
         });
     }
 
-    handleSubmit(event) {
+    async handleSubmit(event) {
         console.log('Le formulaire a été soumis : ' + this.state);
         //POST Validation participation
-        fetch('/participants/', {
+        await fetch('/participants/', {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -72,15 +73,27 @@ class ParticipationForm extends React.Component {
                 nom: this.state.firstName,
                 prenom: this.state.lastName,
                 age: Date.parse(this.state.bday),
-                email: this.state.mail,
-                event: this.state.event
+                email: this.state.mail
             })
-        }).then(function (response) {
+        }).then(response => response.json())
+            .then(data => this.setState({id: data.id}));
+
+        console.log('toto');
+        console.log(this.state.id);
+        fetch('/events/ajoutParticipant/' + this.state.event.id, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                id: this.state.id
+            })
+        }).then((response) => {
             console.log(response);
         });
 
-        //redirection vers page de confirmation
-        console.log(this.state);
+        //TODO : redirection vers page de confirmation avec alert
         //event.preventDefault();
     }
 
@@ -119,6 +132,7 @@ class ParticipationForm extends React.Component {
                                 fullWidth
                                 autoComplete="fname"
                                 onChange={this.handleChange}
+                                value={"a"}
                             />
                         </Grid>
                         <Grid item xs={12} sm={6}>
@@ -130,6 +144,7 @@ class ParticipationForm extends React.Component {
                                 fullWidth
                                 autoComplete="lname"
                                 onChange={this.handleChange}
+                                value={"a"}
                             />
                         </Grid>
                         <Grid item xs={12} sm={6}>
@@ -151,6 +166,7 @@ class ParticipationForm extends React.Component {
                                 fullWidth
                                 autoComplete="email"
                                 onChange={this.handleChange}
+                                value={"simon.collin.auditeur@lecnam.net"}
                             />
                         </Grid>
                     </Grid>
