@@ -21,6 +21,7 @@ class ParticipationForm extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            isOk: false,
             id:'',
             firstName: '',
             lastName: '',
@@ -41,13 +42,20 @@ class ParticipationForm extends React.Component {
             .catch(error => this.setState({ error, isLoading: false }));
     }
 
-    handleChange(event) {
+    async handleChange(event) {
         const target = event.target;
         const value = target.value;
         const name = target.name;
 
-        this.setState({
-            [name]: value
+        await this.setState({
+            [name]: value,
+        });
+
+        await this.setState({
+            isOk: (this.state.firstName !== ''
+                && this.state.lastName !== ''
+                && /.+@.+\..+/.test(this.state.mail)
+                && this.state.bday !== '')
         });
     }
 
@@ -74,30 +82,31 @@ class ParticipationForm extends React.Component {
         }).then(response => response.json())
             .then(data => this.setState({id: data.id}));
 
-        fetch('/events/ajoutParticipant/' + this.state.event.id, {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                id: this.state.id
-            })
-        }).then((response) => {
-            //console.log(response);
-            if (response.status === 200) {
-                console.log('toto');
-                alert('Votre participation a bien été enregistrée, un mail vous a été envoyé !');
-                //alertService.success('Votre participation a bien été enregistré, un mail vous a été envoyé !', { autoClose: true, keepAfterRouteChange: false });
-            }
-        });
+        if (this.state.id !== '') {
+            fetch('/events/ajoutParticipant/' + this.state.event.id, {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    id: this.state.id
+                })
+            }).then((response) => {
+                //console.log(response);
+                if (response.status === 200) {
+                    alert('Votre participation a bien été enregistrée, un mail vous a été envoyé !');
+                    //alertService.success('Votre participation a bien été enregistré, un mail vous a été envoyé !', { autoClose: true, keepAfterRouteChange: false });
+                }
+            });
+        }
 
-        //TODO : redirection vers page de confirmation avec alert
+        //TODO : redirection vers page d'évènements après alert
         //event.preventDefault();
     }
 
     render() {
-        const {event: event, isLoading} = this.state;
+        const {isOk, event: event, isLoading} = this.state;
 
         const onSuccess = (payment) => {
             //console.log('Successful payment!', payment);
@@ -137,7 +146,7 @@ class ParticipationForm extends React.Component {
                             <TextField
                                 required
                                 id="lastName"
-                                name="?m"
+                                name="lastName"
                                 label="Nom"
                                 fullWidth
                                 autoComplete="lname"
@@ -168,19 +177,27 @@ class ParticipationForm extends React.Component {
                     </Grid>
                 </React.Fragment>
                 <br/>
+
                 <div>
                     Valider et payer {numberFormat(event.prix)} :
                 </div>
-                <PaypalButton
-                    client={CLIENT}
-                    env={ENV}
-                    commit={false}
-                    currency={'EUR'}
-                    total={event.prix}
-                    onSuccess={onSuccess}
-                    onError={onError}
-                    onCancel={onCancel}
-                />
+                {isOk &&
+                    <PaypalButton
+                        client={CLIENT}
+                        env={ENV}
+                        commit={false}
+                        currency={'EUR'}
+                        total={event.prix}
+                        onSuccess={onSuccess}
+                        onError={onError}
+                        onCancel={onCancel}
+                    />
+                }
+                {!isOk &&
+                    <div>
+                        Veuillez renseigner tous les champs correctement
+                    </div>
+                }
             </form>
         );
     }

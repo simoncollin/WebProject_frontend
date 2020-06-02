@@ -54,7 +54,6 @@ class PaypalButton extends React.Component {
             onError,
             onCancel,
         } = this.props;
-        console.log(this.props);
 
         const paypal = window.paypal;
 
