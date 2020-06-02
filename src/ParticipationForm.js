@@ -6,6 +6,7 @@ import DateFnsUtils from '@date-io/date-fns';
 import { MuiPickersUtilsProvider, InlineDatePicker } from "material-ui-pickers";
 import PaypalButton from './PaypalButton';
 import { numberFormat } from './numberFormat';
+import { alertService } from './_services/alertService';
 
 const CLIENT = {
     sandbox: process.env.REACT_APP_PAYPAL_CLIENT_ID_SANDBOX,
@@ -41,8 +42,6 @@ class ParticipationForm extends React.Component {
     }
 
     handleChange(event) {
-        console.log('event');
-        console.log(event.target);
         const target = event.target;
         const value = target.value;
         const name = target.name;
@@ -50,8 +49,6 @@ class ParticipationForm extends React.Component {
         this.setState({
             [name]: value
         });
-        console.log('state');
-        console.log(Date.parse(this.state.bday));
     }
 
     handleDateChange(date) {
@@ -61,7 +58,6 @@ class ParticipationForm extends React.Component {
     }
 
     async handleSubmit(event) {
-        console.log('Le formulaire a été soumis : ' + this.state);
         //POST Validation participation
         await fetch('/participants/', {
             method: 'POST',
@@ -78,8 +74,6 @@ class ParticipationForm extends React.Component {
         }).then(response => response.json())
             .then(data => this.setState({id: data.id}));
 
-        console.log('toto');
-        console.log(this.state.id);
         fetch('/events/ajoutParticipant/' + this.state.event.id, {
             method: 'POST',
             headers: {
@@ -90,7 +84,12 @@ class ParticipationForm extends React.Component {
                 id: this.state.id
             })
         }).then((response) => {
-            console.log(response);
+            //console.log(response);
+            if (response.status === 200) {
+                console.log('toto');
+                alert('Votre participation a bien été enregistrée, un mail vous a été envoyé !');
+                //alertService.success('Votre participation a bien été enregistré, un mail vous a été envoyé !', { autoClose: true, keepAfterRouteChange: false });
+            }
         });
 
         //TODO : redirection vers page de confirmation avec alert
@@ -101,7 +100,7 @@ class ParticipationForm extends React.Component {
         const {event: event, isLoading} = this.state;
 
         const onSuccess = (payment) => {
-            console.log('Successful payment!', payment);
+            //console.log('Successful payment!', payment);
             this.state.payment = payment;
             this.handleSubmit();
         };
@@ -132,7 +131,6 @@ class ParticipationForm extends React.Component {
                                 fullWidth
                                 autoComplete="fname"
                                 onChange={this.handleChange}
-                                value={"a"}
                             />
                         </Grid>
                         <Grid item xs={12} sm={6}>
@@ -144,7 +142,6 @@ class ParticipationForm extends React.Component {
                                 fullWidth
                                 autoComplete="lname"
                                 onChange={this.handleChange}
-                                value={"a"}
                             />
                         </Grid>
                         <Grid item xs={12} sm={6}>
@@ -166,7 +163,6 @@ class ParticipationForm extends React.Component {
                                 fullWidth
                                 autoComplete="email"
                                 onChange={this.handleChange}
-                                value={"simon.collin.auditeur@lecnam.net"}
                             />
                         </Grid>
                     </Grid>
