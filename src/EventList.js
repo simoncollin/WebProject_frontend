@@ -32,6 +32,11 @@ class EventList extends Component {
         });
     }
 
+    /* Bouton quand il y aura la gestion organisateur
+    <Button size="sm" color="primary" tag={Link} to={"/events/" + event.id}>Edit</Button>
+    <Button size="sm" color="danger" onClick={() => this.remove(event.id)}>Delete</Button>
+     */
+
     render() {
         const {events: events, isLoading} = this.state;
 
@@ -51,8 +56,6 @@ class EventList extends Component {
                 <td>{event.prix}€</td>
                 <td>
                     <ButtonGroup>
-                        <Button size="sm" color="primary" tag={Link} to={"/events/" + event.id}>Edit</Button>
-                        <Button size="sm" color="danger" onClick={() => this.remove(event.id)}>Delete</Button>
                         <Button size="sm" color="primary" tag={Link} to={"/participe/" + event.id}>Participer</Button>
                     </ButtonGroup>
                 </td>

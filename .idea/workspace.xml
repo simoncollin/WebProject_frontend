@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="647fbe60-48ee-4751-baa2-b43cf2d219a1" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/src/ParticipationForm.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/ParticipationForm.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/PaypalButton.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/PaypalButton.js" afterDir="false" />
-    </list>
+    <list default="true" id="647fbe60-48ee-4751-baa2-b43cf2d219a1" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -28,8 +25,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/ParticipationForm.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="329">
-              <caret line="59" column="5" lean-forward="true" selection-start-line="59" selection-start-column="5" selection-end-line="59" selection-end-column="5" />
+            <state relative-caret-position="299">
+              <caret line="57" column="42" lean-forward="true" selection-start-line="57" selection-start-column="42" selection-end-line="57" selection-end-column="42" />
               <folding>
                 <element signature="e#0#26#0" expanded="true" />
               </folding>
@@ -201,16 +198,15 @@
       <workItem from="1589450219106" duration="687000" />
       <workItem from="1590151321012" duration="5952000" />
       <workItem from="1591006267929" duration="10555000" />
-      <workItem from="1591099152108" duration="7225000" />
+      <workItem from="1591099152108" duration="7430000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="53192000" />
+    <option name="totallyTimeSpent" value="53397000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1440" height="900" extended-state="0" />
-    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.24964234" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -511,8 +507,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/ParticipationForm.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="329">
-          <caret line="59" column="5" lean-forward="true" selection-start-line="59" selection-start-column="5" selection-end-line="59" selection-end-column="5" />
+        <state relative-caret-position="299">
+          <caret line="57" column="42" lean-forward="true" selection-start-line="57" selection-start-column="42" selection-end-line="57" selection-end-column="42" />
           <folding>
             <element signature="e#0#26#0" expanded="true" />
           </folding>
